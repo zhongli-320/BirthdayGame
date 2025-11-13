@@ -162,6 +162,20 @@ const engine = new Engine(GODOT_CONFIG);
 		initializing = false;
 	}
 
+	// 函数用于确保标题正确显示，移除可能添加的(DEBUG)后缀
+	function ensureCorrectTitle() {
+		// 设置为您想要的标题
+		const desiredTitle = 'BirthdayGames';
+		document.title = desiredTitle;
+		
+		// 添加一个监听器来持续检查标题变化
+		setInterval(() => {
+			if (document.title !== desiredTitle) {
+				document.title = desiredTitle;
+			}
+		}, 100);
+	}
+
 	const missing = Engine.getMissingFeatures({
 		threads: GODOT_THREADS_ENABLED,
 	});
@@ -211,6 +225,8 @@ const engine = new Engine(GODOT_CONFIG);
 			},
 		}).then(() => {
 			setStatusMode('hidden');
+			// 游戏加载完成后，确保标题正确显示
+			ensureCorrectTitle();
 		}, displayFailureNotice);
 	}
 }());
